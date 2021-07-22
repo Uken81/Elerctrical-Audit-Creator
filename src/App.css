@@ -2,10 +2,27 @@
     margin: 0;
     padding: 0;
   }
+
+  form {
+    background-color: burlywood;
+    padding: 5%;
+    
+  }
+
+  fieldset {
+    padding: 1%;
+    margin: 1%;
+  }
+
+  span {
+    color: brown;
+    font-size: larger;
+    font-weight: bolder;
+  }
   
   .section {
     
-    grid-template: repeat(4, 1fr) / repeat(4, 1fr);
+    /* grid-template: repeat(4, 1fr) / repeat(4, 1fr); */
     
   }
 

@@ -4,7 +4,7 @@ import Forms from './Forms';
 import Output from './Output';
 
 function App() {
-  const [keysArray, setKeysArray] = useState([]);
+  const [keysArray] = useState([]);
   const [formValuesArray, setformValuesArray] = useState([]);
   const [sectionArray, setSectionArray] = useState([]);
 
@@ -12,8 +12,8 @@ function App() {
   let [entries, setEntries] = useState([]);
   
 
-  const [sectionA, setSectionA] = useState([]);
-  let [filter, setFilter] = useState();
+  // const [sectionA, setSectionA] = useState([]);
+  // let [filter, setFilter] = useState();
 
   let [ready, setReady] = useState(false);
 
@@ -71,17 +71,8 @@ let newObj;
     console.log('entries: ' +  entries);   
   }
 
-  useEffect(()=> {
-    
-  const createSectionA = () => {
-            filter = entries.filter(entry => entry[1].section === 'a');
-            console.log('filter: ' +  filter);
-            setSectionA(()=> filter);
-            
-    }
-  createSectionA();
-  console.log('createSectionA');
-  },[filter, entries]);
+
+
   
   const handleClick = () => {
     createFormValuesArray();
@@ -95,7 +86,7 @@ let newObj;
 
   function log() {
     console.log(typeof keysArray);
-    console.log('filter: ' + filter);
+    // console.log('filter: ' + filter);
     console.log('ready: ' + ready);
     // console.log('test: ' + sectionA[1][1].title)
     
@@ -109,7 +100,7 @@ let newObj;
       {/* {ready && <p>{sectionA[1][1].title}</p>} */}
       <button onClick={handleClick}>Submit</button>
       <button onClick={log}>Log</button>
-     {ready && <Output entries={entries} sectionA={sectionA} />}
+     {ready && <Output entries={entries} />}
     </div>
   );
 }
