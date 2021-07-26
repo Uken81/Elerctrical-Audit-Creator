@@ -19,9 +19,13 @@
     font-size: larger;
     font-weight: bolder;
   }
-  
-  .section {
+
+  #form {
     
+  }
+  
+  .pageOne {
+    background-color: whitesmoke;
     /* grid-template: repeat(4, 1fr) / repeat(4, 1fr); */
     
   }
@@ -50,9 +54,14 @@
 }
 
 .section-a {
-    margin: 50px;
+  border: black 3px solid;
+  padding: 1%;
+  margin: 50px;
+    
 }
 
 .section-b {
-    margin: 50px;
+  border: black 3px solid;
+  padding: 1%;
+  margin: 50px;
 }

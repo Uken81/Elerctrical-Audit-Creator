@@ -1,7 +1,8 @@
 import './App.css';
 import { useEffect, useState } from 'react';
-import Forms from './Forms';
-import Output from './Output';
+import FormPageOne from './FormPages/FormPageOne';
+import OutputP1 from './OutputPages/OutputP1';
+
 
 function App() {
   const [keysArray] = useState([]);
@@ -9,18 +10,14 @@ function App() {
   const [sectionArray, setSectionArray] = useState([]);
 
   let [auditResults, setAuditResults] = useState({});
-  let [entries, setEntries] = useState([]);
-  
+  const [entries, setEntries] = useState([]);
 
-  // const [sectionA, setSectionA] = useState([]);
-  // let [filter, setFilter] = useState();
-
-  let [ready, setReady] = useState(false);
-
+  const [displayForm, setdisplayForm] = useState(true);
+  const [selectedOption, setSelectedOption] = useState('');
   useEffect(() => {
     function createKeysArray() {
       let keys = Array.from(document.getElementsByClassName('input-field'));
-     
+      keys = keys.filter(entry => entry.type !== 'radio');
       keys.forEach((entry) => {
         keysArray.push(entry.dataset.tags);
       });
@@ -33,16 +30,24 @@ function App() {
 
   const createFormValuesArray = () => {
     let keys = Array.from(document.getElementsByClassName('input-field'));
+    keys = keys.filter(entry => entry.type !== 'radio');
     console.log('keys: ' + keys);
-    keys.forEach((function (entry) {
-      setformValuesArray(formValuesArray.push(entry.value));
-    }));
+    keys.forEach((entry) => {
+      if (entry.id !== 'radio-answer') {
+        setformValuesArray(formValuesArray.push(entry.value));
+      } if (entry.id === 'radio-answer') {
+        setformValuesArray(formValuesArray.push(entry.dataset.value));
+      }
+     
+      
+    });
     console.log('createFormValuesArray');
     console.log(formValuesArray);
   };
 
   const createSectionArray = () => {
     let keys = Array.from(document.getElementsByClassName('input-field'));
+    keys = keys.filter(entry => entry.type !== 'radio');
     keys.forEach((function (entry) {
       setSectionArray(sectionArray.push(entry.dataset.section));
     }));
@@ -59,48 +64,60 @@ function App() {
           section: sectionArray[index]
         }
       }));
-    console.log('audit results: ' +  auditResults);
-    console.log('ready: ' +  ready);
+    console.log('audit results: ' + auditResults);
+
   };
-let newObj;
+
+  let newObj;
   function createEntries() {
     newObj = Object.entries(auditResults);
-    setEntries(()=> newObj);
-    console.log('newObj: ' +  newObj);
+    setEntries(() => newObj);
+    console.log('newObj: ' + newObj);
     console.log('createEntries');
-    console.log('entries: ' +  entries);   
+    console.log('entries: ' + entries);
   }
 
-
-
-  
-  const handleClick = () => {
+  const handleClick = (event) => {
+    event.preventDefault();
     createFormValuesArray();
     createSectionArray();
     combineKeyValuesToObject();
     createEntries();
-    // setTimeout(()=> setReady(true), 10);
-    setReady(true);
+
+    setdisplayForm(false);
     console.log("entries: " + entries);
   }
 
+  const handleOptionChange = changeEvent => {
+    setSelectedOption(changeEvent.target.value);
+}
+
+  const goBackToForm = () => {
+    setdisplayForm(true);
+  }
+
   function log() {
-    console.log(typeof keysArray);
-    // console.log('filter: ' + filter);
-    console.log('ready: ' + ready);
-    // console.log('test: ' + sectionA[1][1].title)
-    
+console.log(selectedOption);
+    // console.log(typeof keysArray);
+    // console.log('ready: ' + ready);
   }
 
 
   return (
     <div className="App">
-      <Forms />
-      {/* {!ready && <Forms />} */}
-      {/* {ready && <p>{sectionA[1][1].title}</p>} */}
-      <button onClick={handleClick}>Submit</button>
+      <FormPageOne 
+      formValuesArray={formValuesArray} 
+      displayForm={displayForm} 
+      setdisplayForm={setdisplayForm} 
+      selectedOption={selectedOption}
+      // setselectedOption={setSelectedOption}
+      handleOptionChange={handleOptionChange}
+      />
+      {/* {!ready && <FormPageOne formValuesArray={formValuesArray} redo={redo} />} */}
+      <button id='submitButton' onClick={handleClick}>Submit</button>
+      {!displayForm && <button onClick={goBackToForm}>Back</button>}
       <button onClick={log}>Log</button>
-     {ready && <Output entries={entries} />}
+      {!displayForm && <OutputP1 entries={entries} />}
     </div>
   );
 }
