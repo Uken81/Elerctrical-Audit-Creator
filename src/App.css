@@ -20,6 +20,11 @@
     font-weight: bolder;
   }
 
+  legend {
+    font-size: larger;
+    font-weight: bold;
+  }
+
   #form {
     
   }

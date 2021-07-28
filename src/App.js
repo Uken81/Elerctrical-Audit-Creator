@@ -2,6 +2,8 @@ import './App.css';
 import { useEffect, useState } from 'react';
 import FormPageOne from './FormPages/FormPageOne';
 import OutputP1 from './OutputPages/OutputP1';
+import { JsxToPdf } from "jsx-to-pdf";
+import Test from './OutputPages/Test';
 
 
 function App() {
@@ -92,12 +94,15 @@ function App() {
     setSelectedOption(changeEvent.target.value);
 }
 
-  const goBackToForm = () => {
+  const editForm = () => {
     setdisplayForm(true);
+    setformValuesArray([]);
+    setSectionArray([]);
+
   }
 
   function log() {
-console.log(selectedOption);
+console.log(formValuesArray);
     // console.log(typeof keysArray);
     // console.log('ready: ' + ready);
   }
@@ -110,14 +115,24 @@ console.log(selectedOption);
       displayForm={displayForm} 
       setdisplayForm={setdisplayForm} 
       selectedOption={selectedOption}
-      // setselectedOption={setSelectedOption}
       handleOptionChange={handleOptionChange}
       />
-      {/* {!ready && <FormPageOne formValuesArray={formValuesArray} redo={redo} />} */}
       <button id='submitButton' onClick={handleClick}>Submit</button>
-      {!displayForm && <button onClick={goBackToForm}>Back</button>}
+      {!displayForm && <button onClick={editForm}>Back</button>}
       <button onClick={log}>Log</button>
-      {!displayForm && <OutputP1 entries={entries} />}
+      <JsxToPdf name='audit' scale='10'>
+      {({ save, jsxRef, error, errorText }) => {
+        return (
+          <div ref={jsxRef}>
+            {!displayForm && <OutputP1 entries={entries}/>}
+         
+            
+            <button style={{ height: 50, margin: 20, backgroundColor: '#61dafb' }} onClick={save}>Download PDF</button>
+          </div>
+        )
+      }}
+      </JsxToPdf>
+      
     </div>
   );
 }

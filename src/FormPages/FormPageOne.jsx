@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import RadioButtons from './RadioButtons';
+import RadioAlterations from './RadioButtons/RadioAlterations';
+import RadioStatus from './RadioButtons/RadioStatus';
 
 
 const FormPageOne = (props) => {
@@ -20,11 +21,17 @@ const FormPageOne = (props) => {
     return (
         <div className="page1">
             <form id="customerForm" >
+                <label htmlFor="referenceNUmber"><strong>Reference No: </strong></label>
+                <input type="tel" className="input-field" id="referenceNumber" name="referenceNumber" data-tags="Reference No" data-section="a" /><br /><br />
                 <span>A. CUSTOMER DETAILS</span>
                 <fieldset>
                     <legend>Customer Information</legend>
                     <label htmlFor="name">Name:</label>
                     <input type="text" className="input-field" id="name" name="name" data-tags="Customer" data-section="a" /><br /><br />
+                    <RadioStatus
+                        selectedOption={selectedOption}
+                        handleOptionChange={handleOptionChange}
+                    />
                     <label htmlFor="address">Address:</label>
                     <input type="text" className="input-field" id="address" name="address" data-tags="Address" data-section="a" /><br /><br />
                     <label htmlFor="home-phone">Home Phone:</label>
@@ -39,7 +46,7 @@ const FormPageOne = (props) => {
                     <input type="text" className="input-field" id="install-address" name="install-address" data-tags="Audit Address" data-section="b" /><br /><br />
                     <label htmlFor="age-of-installation">Estimated age of the electrical installation (years):</label>
                     <input type="number" className="input-field" id="age-of-installation" name="age-of-installation" min="1" data-tags="Estimated age of the electrical installation (years)" data-section="b" /><br /><br />
-                    <RadioButtons
+                    <RadioAlterations
                         selectedOption={selectedOption}
                         handleOptionChange={handleOptionChange}
                     />
